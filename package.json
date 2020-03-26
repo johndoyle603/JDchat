@@ -1,0 +1,28 @@
+{
+  "name": "jdchat",
+  "version": "1.0.0",
+  "description": "Realtime chat app with rooms",
+  "main": "server",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johndoyle603/JDchat.git"
+  },
+  "author": "John Doyle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johndoyle603/JDchat/issues"
+  },
+  "homepage": "https://github.com/johndoyle603/JDchat#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
