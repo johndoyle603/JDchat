@@ -1,26 +1,24 @@
 let path = require("path");
-
 let http = require("http");
-
 let express = require("express");
-
 let socketio = require("socket.io");
-
+let formatMessage = require("./utils/messages");
 let app = express();
-
 let server = http.createServer(app);
-
 let io = socketio(server);
 
 // This sets static folder
 
 app.use(express.static(path.join(__dirname, "public")));
-
+let botname = "chatBot";
 // Run when client connects
 
 io.on("connection", socket => {
   // Welcome current user
-  socket.emit("message", "Welcome to JDchat!");
+  socket.emit(
+    "message",
+    formatMessage(botname, "Welcome to the World Famous Chat Room")
+  );
 
   // Let me know when a user connects
   socket.broadcast.emit("message", "A user joined chat");
