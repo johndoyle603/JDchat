@@ -1,6 +1,17 @@
 let chatForm = document.getElementById("chat-form");
 let chatMessages = document.querySelector(".chat-messages");
+
+// Get user name and room from URL
+
+let { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+});
+
 let socket = io();
+
+// Join the chatroom
+
+socket.emit("joinRoom", { username, room });
 
 // Message from Server
 socket.on("message", message => {
@@ -19,7 +30,7 @@ chatForm.addEventListener("submit", e => {
   // Get message text
   let msg = e.target.elements.msg.value;
 
-  // Emitting message to server
+  // Emit message to server
   socket.emit("chatMessage", msg);
 
   // Clear input
@@ -33,9 +44,9 @@ chatForm.addEventListener("submit", e => {
 function outputMessage(message) {
   let div = document.createElement("div");
   div.classList.add("message");
-  div.innerHTML = `<p class="meta">Brad <span>9:12pm</span></p>
+  div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
     <p class="text">
-     ${message}
+     ${message.text}
     </p>`;
   document.querySelector(".chat-messages").appendChild(div);
 }
