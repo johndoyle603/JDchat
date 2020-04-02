@@ -34,7 +34,6 @@ chatForm.addEventListener("submit", e => {
   socket.emit("chatMessage", msg);
 
   // Clear input
-
   e.target.elements.msg.value = "";
   e.target.elements.msg.focus();
 });

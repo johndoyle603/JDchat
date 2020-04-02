@@ -11,25 +11,31 @@ let io = socketio(server);
 // This sets static folder
 
 app.use(express.static(path.join(__dirname, "public")));
-let botName = "World Famous Chat Bot";
+let botName = "World Famous Chat Room";
 
 // Run when client connects
 
 io.on("connection", socket => {
   socket.on("joinroom", ({ username, room }) => {
+    let user = userJoin(socket, id, username, room);
+
+    socket.join(user.room);
+
     // Welcome current user
 
     socket.emit(
       "message",
-      formatMessage(botName, "Welcome to the World Famous Chat Room")
+      formatMessage(botName, "Welcome to the World Famous Chat Room!")
     );
 
-    // Let me know when a user connects
+    // Broadcast when a user connects
 
-    socket.broadcast.emit(
-      "message",
-      formatMessage(botName, "A user joined the chat")
-    );
+    socket.broadcast
+      .to(user.room)
+      .emit(
+        "message",
+        formatMessage(botName, `${user.username} has joined the chat`)
+      );
   });
 
   // Listen for chat message
